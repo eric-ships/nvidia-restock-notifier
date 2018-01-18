@@ -1,7 +1,5 @@
 # Nvidia Restock Notifier
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
 ## Table of Contents
 
 - [How to Use](#how-to-use)
@@ -10,31 +8,40 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## How to Use
 
-_To come..._
-
-## Start Developing
-
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
 | Technology                | Version     |
 | ------------------------- | -----------:|
 | node                      | 8.5.0       |
 | yarn                      | 1.2.1       |
 
-### Folder Structure
+```
+node src/index.js
+```
 
-After creation, your project should look like this:
+## Start Developing
+
+Make sure you have a `.env` file.
 
 ```
-my-app/
+//.env
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+```
+
+### Folder Structure
+
+```
+nvidia-restock-notifier/
+  .env
+  .eslintrc
+  .gitignore
   README.md
   node_modules/
   package.json
-  public/
-    index.html
-    favicon.ico
   src/
-    App.js
-    App.test.js
     index.js
+  yarn.lock
 ```
+
+### Resources
+
+- [Puppeteer](https://github.com/GoogleChrome/puppeteer)
+- [Puppeteer examples](https://github.com/checkly/puppeteer-examples)
