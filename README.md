@@ -5,6 +5,7 @@
 - [How to Use](#how-to-use)
 - [Start Developing](#start-developing)
   - [Folder Structure](#folder-structure)
+- [Resources](#resources)
 
 ## How to Use
 
@@ -41,7 +42,7 @@ nvidia-restock-notifier/
   yarn.lock
 ```
 
-### Resources
+## Resources
 
 - [Puppeteer](https://github.com/GoogleChrome/puppeteer)
 - [Puppeteer examples](https://github.com/checkly/puppeteer-examples)
