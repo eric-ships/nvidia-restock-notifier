@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "chrome-launcher": "^0.10.2",
-    "chrome-remote-interface": "^0.25.5"
+    "chrome-remote-interface": "^0.25.5",
+    "twilio": "^3.11.1"
   },
   "devDependencies": {
     "eslint": "^4.15.0"
