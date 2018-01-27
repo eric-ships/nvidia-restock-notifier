@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "puppeteer": "^1.0.0"
+    "chrome-launcher": "^0.10.2",
+    "chrome-remote-interface": "^0.25.5"
   },
   "devDependencies": {
     "eslint": "^4.15.0"
