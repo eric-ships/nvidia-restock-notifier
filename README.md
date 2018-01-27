@@ -24,7 +24,14 @@ Make sure you have a `.env` file.
 
 ```
 //.env
-PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+DENNYS_NUMBER = '+XXXXXXXXXX'
+ERICS_NUMBER = '+XXXXXXXXXX'
+NVIDIA_1070_URL = 'https://www.nvidia.com/en-us/geforce/products/10series/geforce-gtx-1070-ti/'
+NVIDIA_1080TI_URL = 'https://www.nvidia.com/en-us/geforce/products/10series/geforce-gtx-1080-ti/'
+REFRESH_INTERVAL_IN_SECONDS = 8
+TWILIO_ACCOUNT_SID = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+TWILIO_AUTH_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+TWILIO_NUMBER = '+XXXXXXXXXX'
 ```
 
 ### Folder Structure
@@ -44,5 +51,4 @@ nvidia-restock-notifier/
 
 ## Resources
 
-- [Puppeteer](https://github.com/GoogleChrome/puppeteer)
-- [Puppeteer examples](https://github.com/checkly/puppeteer-examples)
+- [Quick Tip: Getting Started with Headless Chrome in Node.js](https://www.sitepoint.com/headless-chrome-node-js/)
