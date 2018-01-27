@@ -1,18 +1,20 @@
+require('dotenv').config();
 const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
 const twilio = require('twilio');
 
-const DENNYS_NUMBER = '+19088124966';
-const ERICS_NUMBER = '+18624853763';
-const NVIDIA_1070_URL = 'https://www.nvidia.com/en-us/geforce/products/10series/geforce-gtx-1070-ti/';
-const NVIDIA_1080TI_URL = 'https://www.nvidia.com/en-us/geforce/products/10series/geforce-gtx-1080-ti/';
-const REFRESH_INTERVAL_IN_SECONDS = 5;
-const TWILIO_NUMBER = '+16469418448';
+const {
+  DENNYS_NUMBER,
+  ERICS_NUMBER,
+  NVIDIA_1070_URL,
+  NVIDIA_1080TI_URL,
+  REFRESH_INTERVAL_IN_SECONDS,
+  TWILIO_ACCOUNT_SID,
+  TWILIO_AUTH_TOKEN,
+  TWILIO_NUMBER,
+} = process.env; // eslint-disable-line no-undef
 
-const accountSid = 'ACc0a686b46b2b76db54f3c5fd64eb898a'; // Your Account SID from www.twilio.com/console
-const authToken = 'f4a939990587aaa19370118a6066f62c';   // Your Auth Token from www.twilio.com/console
-
-const client = new twilio(accountSid, authToken);
+const client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
 // Nvidia 1070
 setInterval(
@@ -76,7 +78,7 @@ setInterval(
       chrome.kill();
     });
   }),
-  REFRESH_INTERVAL_IN_SECONDS * 1000,
+  +REFRESH_INTERVAL_IN_SECONDS * 1000,
 );
 
 // Nvidia 1080Ti
@@ -141,5 +143,5 @@ setInterval(
       chrome.kill();
     });
   }),
-  REFRESH_INTERVAL_IN_SECONDS * 1000,
+  +REFRESH_INTERVAL_IN_SECONDS * 1000,
 );
