@@ -16,132 +16,138 @@ const {
 
 const client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
-// Nvidia 1070
-setInterval(
-  (async function() {
-    console.log(`${new Date().toTimeString()}: Checking for 1070...`);
+async function check1070() {
+  console.log(`${new Date().toTimeString()}: Checking for 1070...`);
 
-    async function launchChrome() {
-      return await chromeLauncher.launch({
-        chromeFlags: [
-          '--disable-gpu',
-          '--headless',
-        ],
-      });
+  async function launchChrome() {
+    return await chromeLauncher.launch({
+      chromeFlags: [
+        '--disable-gpu',
+        '--headless',
+      ],
+    });
+  }
+  const chrome = await launchChrome();
+  const protocol = await CDP({
+    port: chrome.port,
+  });
+
+  const {
+    DOM,
+    Page,
+    Runtime,
+  } = protocol;
+  await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
+
+  Page.navigate({
+    url: NVIDIA_1070_URL,
+  });
+
+  Page.loadEventFired(async() => {
+    const expression = 'document.querySelector("#s-tab-2").textContent';
+    const result = await Runtime.evaluate({
+      expression,
+    });
+    const is1070OutOfStock = result.result.value.includes('Notify Me');
+
+    if (!is1070OutOfStock) {
+      const body = '1070 IS NOW IN STOCK ' + NVIDIA_1070_URL;
+
+      client.messages.create({
+        body,
+        to: DENNYS_NUMBER,
+        from: TWILIO_NUMBER,
+      }).then((message) => console.log(`Sent to Denny's phone! ${message.sid}`));
+
+      client.messages.create({
+        body,
+        to: ERICS_NUMBER,
+        from: TWILIO_NUMBER,
+      }).then((message) => console.log(`Sent to Eric's phone! ${message.sid}`));
     }
-    const chrome = await launchChrome();
-    const protocol = await CDP({
-      port: chrome.port,
+
+    const output = is1070OutOfStock
+      ?  '1070 is out of stock'
+      : '1070 IS IN STOCK!!! 1070 IS IN STOCK!!! 1070 IS IN STOCK!!!';
+
+    console.log(`${new Date().toTimeString()}: ${output}`);
+  });
+}
+
+async function check1080Ti() {
+  console.log(`${new Date().toTimeString()}: Checking for 1080Ti...`);
+
+  async function launchChrome() {
+    return await chromeLauncher.launch({
+      chromeFlags: [
+        '--disable-gpu',
+        '--headless',
+      ],
     });
+  }
+  const chrome = await launchChrome();
+  const protocol = await CDP({
+    port: chrome.port,
+  });
 
-    const {
-      DOM,
-      Page,
-      Runtime,
-    } = protocol;
-    await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
+  const {
+    DOM,
+    Page,
+    Runtime,
+  } = protocol;
+  await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
 
-    Page.navigate({
-      url: NVIDIA_1070_URL,
+  Page.navigate({
+    url: NVIDIA_1080TI_URL,
+  });
+
+  Page.loadEventFired(async() => {
+    const expression = 'document.querySelector("#section1").textContent';
+    const result = await Runtime.evaluate({
+      expression,
     });
+    const is1080TiOutOfStock = result.result.value.includes('Notify Me');
 
-    Page.loadEventFired(async() => {
-      const expression = 'document.querySelector("#s-tab-2").textContent';
-      const result = await Runtime.evaluate({
-        expression,
-      });
-      const is1070OutOfStock = result.result.value.includes('Notify Me');
+    if (!is1080TiOutOfStock) {
+      const body = '1080Ti IS NOW IN STOCK ' + NVIDIA_1080TI_URL;
 
-      if (!is1070OutOfStock) {
-        const body = '1070 IS NOW IN STOCK ' + NVIDIA_1070_URL;
+      client.messages.create({
+        body,
+        to: DENNYS_NUMBER,
+        from: TWILIO_NUMBER,
+      }).then((message) => console.log(`Sent to Denny's phone! ${message.sid}`));
 
-        client.messages.create({
-          body,
-          to: DENNYS_NUMBER,
-          from: TWILIO_NUMBER,
-        }).then((message) => console.log(`Sent to Denny's phone! ${message.sid}`));
-
-        client.messages.create({
-          body,
-          to: ERICS_NUMBER,
-          from: TWILIO_NUMBER,
-        }).then((message) => console.log(`Sent to Eric's phone! ${message.sid}`));
-      }
-
-      const output = is1070OutOfStock
-        ?  '1070 is out of stock'
-        : '1070 IS IN STOCK!!! 1070 IS IN STOCK!!! 1070 IS IN STOCK!!!';
-
-      console.log(`${new Date().toTimeString()}: ${output}`);
-
-      protocol.close();
-      chrome.kill();
-    });
-  }),
-  +REFRESH_INTERVAL_IN_SECONDS * 1000,
-);
-
-// Nvidia 1080Ti
-setInterval(
-  (async function() {
-    console.log(`${new Date().toTimeString()}: Checking for 1080Ti...`);
-
-    async function launchChrome() {
-      return await chromeLauncher.launch({
-        chromeFlags: [
-          '--disable-gpu',
-          '--headless',
-        ],
-      });
+      client.messages.create({
+        body,
+        to: ERICS_NUMBER,
+        from: TWILIO_NUMBER,
+      }).then((message) => console.log(`Sent to Eric's phone! ${message.sid}`));
     }
-    const chrome = await launchChrome();
-    const protocol = await CDP({
-      port: chrome.port,
-    });
 
-    const {
-      DOM,
-      Page,
-      Runtime,
-    } = protocol;
-    await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
+    const output = is1080TiOutOfStock
+      ?  '1080Ti is out of stock'
+      : '1080Ti IS IN STOCK!!! 1080Ti IS IN STOCK!!! 1080Ti IS IN STOCK!!!';
 
-    Page.navigate({
-      url: NVIDIA_1080TI_URL,
-    });
+    console.log(`${new Date().toTimeString()}: ${output}`);
 
-    Page.loadEventFired(async() => {
-      const expression = 'document.querySelector("#section1").textContent';
-      const result = await Runtime.evaluate({
-        expression,
-      });
-      const is1080TiOutOfStock = result.result.value.includes('Notify Me');
+    protocol.close();
+    chrome.kill();
+  });
+}
 
-      if (!is1080TiOutOfStock) {
-        const body = '1080Ti IS NOW IN STOCK ' + NVIDIA_1080TI_URL;
+function checkGPUs() {
+  check1070();
+  check1080Ti();
+}
 
-        client.messages.create({
-          body,
-          to: DENNYS_NUMBER,
-          from: TWILIO_NUMBER,
-        }).then((message) => console.log(`Sent to Denny's phone! ${message.sid}`));
+function init() {
+  checkGPUs();
 
-        client.messages.create({
-          body,
-          to: ERICS_NUMBER,
-          from: TWILIO_NUMBER,
-        }).then((message) => console.log(`Sent to Eric's phone! ${message.sid}`));
-      }
+  setInterval(
+    checkGPUs,
+    +REFRESH_INTERVAL_IN_SECONDS * 1000,
+  );
+}
 
-      const output = is1080TiOutOfStock
-        ?  '1080Ti is out of stock'
-        : '1080Ti IS IN STOCK!!! 1080Ti IS IN STOCK!!! 1080Ti IS IN STOCK!!!';
+init();
 
-      console.log(`${new Date().toTimeString()}: ${output}`);
-
-      protocol.close();
-      chrome.kill();
-    });
-  }),
-  +REFRESH_INTERVAL_IN_SECONDS * 1000,
-);
