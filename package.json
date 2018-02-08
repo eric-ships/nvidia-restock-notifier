@@ -6,6 +6,7 @@
     "chrome-launcher": "^0.10.2",
     "chrome-remote-interface": "^0.25.5",
     "dotenv": "^4.0.0",
+    "moment": "^2.20.1",
     "twilio": "^3.11.1"
   },
   "devDependencies": {
