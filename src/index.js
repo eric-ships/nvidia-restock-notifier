@@ -1,6 +1,7 @@
 require('dotenv').config();
 const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
+const moment = require('moment');
 const twilio = require('twilio');
 
 const {
@@ -51,7 +52,7 @@ async function check1070() {
     const is1070OutOfStock = result.result.value.includes('Notify Me');
 
     if (!is1070OutOfStock) {
-      const body = '1070 IS NOW IN STOCK ' + NVIDIA_1070_URL;
+      const body = moment().format('MMM Do YY, h:mm:ss a') + ' 1070 IS NOW IN STOCK ' + NVIDIA_1070_URL;
 
       client.messages.create({
         body,
@@ -71,6 +72,7 @@ async function check1070() {
       : '1070 IS IN STOCK!!! 1070 IS IN STOCK!!! 1070 IS IN STOCK!!!';
 
     console.log(`${new Date().toTimeString()}: ${output}`);
+    console.log(moment().format('MMM Do YY, h:mm:ss a'));
   });
 }
 
@@ -109,7 +111,7 @@ async function check1080Ti() {
     const is1080TiOutOfStock = result.result.value.includes('Notify Me');
 
     if (!is1080TiOutOfStock) {
-      const body = '1080Ti IS NOW IN STOCK ' + NVIDIA_1080TI_URL;
+      const body = moment().format('MMM Do YY, h:mm:ss a') + ' 1080Ti IS NOW IN STOCK ' + NVIDIA_1080TI_URL;
 
       client.messages.create({
         body,
@@ -129,6 +131,7 @@ async function check1080Ti() {
       : '1080Ti IS IN STOCK!!! 1080Ti IS IN STOCK!!! 1080Ti IS IN STOCK!!!';
 
     console.log(`${new Date().toTimeString()}: ${output}`);
+    console.log(moment().format('MMM Do YY, h:mm:ss a'));
 
     protocol.close();
     chrome.kill();
