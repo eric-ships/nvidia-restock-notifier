@@ -5,10 +5,9 @@ const moment = require('moment');
 const twilio = require('twilio');
 
 const {
-  DENNYS_NUMBER,
-  ERICS_NUMBER,
   NVIDIA_1070_URL,
   NVIDIA_1080TI_URL,
+  PEOPLE_TO_TEXT,
   REFRESH_INTERVAL_IN_SECONDS,
   TWILIO_ACCOUNT_SID,
   TWILIO_AUTH_TOKEN,
@@ -17,6 +16,18 @@ const {
 
 const client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 const MOMENT_FORMAT = 'MMM Do, h:mm:ss a';
+
+function sendSmsMessages(body) {
+  const peopleToText = JSON.parse(PEOPLE_TO_TEXT);
+
+  peopleToText.forEach(({ name, number }) => {
+    client.messages.create({
+      body,
+      to: number,
+      from: TWILIO_NUMBER,
+    }).then((message) => console.log(`Sent to ${name}'s phone! ${message.sid}`));
+  });
+}
 
 async function check1070() {
   console.log(`${moment().format(MOMENT_FORMAT)}: Checking for 1070...`);
@@ -54,18 +65,7 @@ async function check1070() {
 
     if (!is1070OutOfStock) {
       const body = moment().format(MOMENT_FORMAT) + ' 1070 IS NOW IN STOCK ' + NVIDIA_1070_URL;
-
-      client.messages.create({
-        body,
-        to: DENNYS_NUMBER,
-        from: TWILIO_NUMBER,
-      }).then((message) => console.log(`Sent to Denny's phone! ${message.sid}`));
-
-      client.messages.create({
-        body,
-        to: ERICS_NUMBER,
-        from: TWILIO_NUMBER,
-      }).then((message) => console.log(`Sent to Eric's phone! ${message.sid}`));
+      sendSmsMessages(body);
     }
 
     const output = is1070OutOfStock
@@ -112,18 +112,7 @@ async function check1080Ti() {
 
     if (!is1080TiOutOfStock) {
       const body = moment().format(MOMENT_FORMAT) + ' 1080Ti IS NOW IN STOCK ' + NVIDIA_1080TI_URL;
-
-      client.messages.create({
-        body,
-        to: DENNYS_NUMBER,
-        from: TWILIO_NUMBER,
-      }).then((message) => console.log(`Sent to Denny's phone! ${message.sid}`));
-
-      client.messages.create({
-        body,
-        to: ERICS_NUMBER,
-        from: TWILIO_NUMBER,
-      }).then((message) => console.log(`Sent to Eric's phone! ${message.sid}`));
+      sendSmsMessages(body);
     }
 
     const output = is1080TiOutOfStock
