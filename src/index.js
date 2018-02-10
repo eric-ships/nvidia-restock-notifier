@@ -16,9 +16,10 @@ const {
 } = process.env; // eslint-disable-line no-undef
 
 const client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+const MOMENT_FORMAT = 'MMM Do, h:mm:ss a';
 
 async function check1070() {
-  console.log(`${moment().format('MMM Do, h:mm:ss a')}: Checking for 1070...`);
+  console.log(`${moment().format(MOMENT_FORMAT)}: Checking for 1070...`);
 
   async function launchChrome() {
     return await chromeLauncher.launch({
@@ -52,7 +53,7 @@ async function check1070() {
     const is1070OutOfStock = result.result.value.includes('Notify Me');
 
     if (!is1070OutOfStock) {
-      const body = moment().format('MMM Do, h:mm:ss a') + ' 1070 IS NOW IN STOCK ' + NVIDIA_1070_URL;
+      const body = moment().format(MOMENT_FORMAT) + ' 1070 IS NOW IN STOCK ' + NVIDIA_1070_URL;
 
       client.messages.create({
         body,
@@ -71,12 +72,12 @@ async function check1070() {
       ?  '1070 is out of stock'
       : '1070 IS IN STOCK!!! 1070 IS IN STOCK!!! 1070 IS IN STOCK!!!';
 
-    console.log(`${moment().format('MMM Do, h:mm:ss a')}: ${output}`);
+    console.log(`${moment().format(MOMENT_FORMAT)}: ${output}`);
   });
 }
 
 async function check1080Ti() {
-  console.log(`${moment().format('MMM Do, h:mm:ss a')}: Checking for 1080Ti...`);
+  console.log(`${moment().format(MOMENT_FORMAT)}: Checking for 1080Ti...`);
 
   async function launchChrome() {
     return await chromeLauncher.launch({
@@ -110,7 +111,7 @@ async function check1080Ti() {
     const is1080TiOutOfStock = result.result.value.includes('Notify Me');
 
     if (!is1080TiOutOfStock) {
-      const body = moment().format('MMM Do, h:mm:ss a') + ' 1080Ti IS NOW IN STOCK ' + NVIDIA_1080TI_URL;
+      const body = moment().format(MOMENT_FORMAT) + ' 1080Ti IS NOW IN STOCK ' + NVIDIA_1080TI_URL;
 
       client.messages.create({
         body,
@@ -129,7 +130,7 @@ async function check1080Ti() {
       ?  '1080Ti is out of stock'
       : '1080Ti IS IN STOCK!!! 1080Ti IS IN STOCK!!! 1080Ti IS IN STOCK!!!';
 
-    console.log(`${moment().format('MMM Do, h:mm:ss a')}: ${output}`);
+    console.log(`${moment().format(MOMENT_FORMAT)}: ${output}`);
 
     protocol.close();
     chrome.kill();
